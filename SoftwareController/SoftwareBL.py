@@ -1,15 +1,19 @@
 # Software Business Logic
 
+import os
 import qrcode
+
 from time import sleep
 from subprocess import Popen
 from django.conf import settings
 
 
 # Constant for filepath and filename
-script_path = settings.BASE_DIR / 'SoftwareController/Scripts/'
-qr_path = settings.BASE_DIR / 'SoftwareController/QrCodes/'
-qr_name = 'qrcode'
+BASE_DIR = settings.BASE_DIR.parent
+script_path = BASE_DIR / 'SoftwareController/Scripts/'
+qr_path = BASE_DIR / 'SoftwareController/QrCodes/'
+qr_name = 'qrcode.png'
+scancode_script_name = 'open_wab_web.sh'
 
 # Constant for background size of qr code
 background_width = 2000
@@ -30,8 +34,7 @@ def _save_qr_code(qr_code: str, filepath: str = qr_path, filename: str = qr_name
     :return: Absolute path to saved file.
     """
 
-    path = '{}{}.png'.format(filepath, filename)
-
+    path = os.path.join(filepath, filename)
     from PIL import Image
     background = Image.new('RGB', (background_width, background_height), color='white')
     img = qrcode.make(qr_code)
@@ -55,7 +58,7 @@ def _scan_code() -> bool:
     :return: Always True when non-critical error.
     """
 
-    Popen('{}{}'.format(script_path, 'open_wab_web.sh'), shell=True)
+    Popen(os.path.join(script_path, scancode_script_name), shell=True)
 
     return True
 
@@ -69,7 +72,6 @@ def _set_image(path_to_img: str, video_source: str = default_video_source):
     :return: "subprocess.Popen" object with started ffmpeg stream
     """
 
-    # TODO: Could be use official library for it.
     ffmpeg = Popen(
         'sudo ffmpeg -loop 1 -i {} -vf scale=800:600 -f v4l2 -vcodec rawvideo -pix_fmt yuyv422 {} '
         '> /dev/null 2>&1 < /dev/null &'.format(
@@ -87,13 +89,15 @@ def scan_code(qr_code: str) -> bool:
 
     :return:
     """
+
     new_qr = _save_qr_code(qr_code)
     _set_image(new_qr)
     _scan_code()
 
     # TODO: Maybe need to fix it. Cause it could be stopping thread. Idk. (2)
+    #       Celery could fix that problem
     sleep(45)
+
     Popen('killall ffmpeg', shell=True)
 
     return True
-
