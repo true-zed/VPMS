@@ -1,19 +1,14 @@
 # Software Business Logic
 
-from time import sleep
 import qrcode
+from time import sleep
 from subprocess import Popen
-from VPMS.settings import BASE_DIR
-
-
-# Example QrCode from web.whatsapp.com
-example_qr = '1@eZI3bgNAvXyktg0zETgBoYKV0lRWSkOkFORLIdFZzCHVXlFLdPI6ZPREOtMnsHpwRMj6+xoFk7bJQQ==,' \
-             'Amig/QvtgrkmJe6CsyHkridF5Qr3Lay6DzEmEx0SaFE=,YckRhP9b6+7nsrEpLsCJAg== '
+from django.conf import settings
 
 
 # Constant for filepath and filename
-script_path = '{}/SoftwareController/Scripts/'.format(BASE_DIR)
-qr_path = '{}/SoftwareController/QrCodes/'.format(BASE_DIR)
+script_path = settings.BASE_DIR / 'SoftwareController/Scripts/'
+qr_path = settings.BASE_DIR / 'SoftwareController/QrCodes/'
 qr_name = 'qrcode'
 
 # Constant for background size of qr code
@@ -92,7 +87,6 @@ def scan_code(qr_code: str) -> bool:
 
     :return:
     """
-
     new_qr = _save_qr_code(qr_code)
     _set_image(new_qr)
     _scan_code()
@@ -103,7 +97,3 @@ def scan_code(qr_code: str) -> bool:
 
     return True
 
-
-if __name__ == '__main__':
-    # Use it for test
-    scan_code(example_qr)
