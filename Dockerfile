@@ -13,13 +13,16 @@ RUN pip install --upgrade pip
 COPY ./requirements ./requirements
 RUN pip install -r ./requirements/common.txt
 
+# install ffmpeg
+RUN apt-get install ffmpeg
+
 # copy docker-entrypoint.sh
 COPY ./docker-entrypoint.sh ./docker-entrypoint.sh
 
 # copy project
 COPY . .
 
-# give permission
+# give permissions
 RUN chmod -x docker-entrypoint.sh
 
 # run docker-entrypoint.sh
