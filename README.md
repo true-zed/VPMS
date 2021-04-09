@@ -65,4 +65,4 @@ Run emulator (in container):
 ## 4. Setup Gunicorn & Supervisor
 ## 5. Setup autorun
 
-> P.S. If you need help you can text [here](http://goog.le) or [here](https://t.me/true_zed)
+> P.S. If you need help you can text [here](http://google.com) or [here](https://t.me/true_zed)
