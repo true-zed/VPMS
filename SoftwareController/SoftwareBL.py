@@ -73,8 +73,7 @@ def _set_image(path_to_img: str, video_source: str = default_video_source):
     """
 
     ffmpeg = Popen(
-        'sudo ffmpeg -loop 1 -i {} -vf scale=800:600 -f v4l2 -vcodec rawvideo -pix_fmt yuyv422 {} '
-        '> /dev/null 2>&1 < /dev/null &'.format(
+        'sudo ffmpeg -loop 1 -i {} -vf scale=800:600 -f v4l2 -vcodec rawvideo -pix_fmt yuyv422 {} > /dev/null 2>&1 < /dev/null &'.format(
             path_to_img, video_source
         ), shell=True)
 

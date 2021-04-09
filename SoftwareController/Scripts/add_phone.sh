@@ -2,7 +2,7 @@ echo Connecting to adb
 adb devices
 
 # If System UI isn't responding
-adb shell input tap 160 335
+# adb shell input tap 160 335
 
 echo Opening WhatsApp Business App
 adb shell am start -n com.whatsapp.w4b/com.whatsapp.Main
