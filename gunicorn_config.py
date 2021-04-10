@@ -1,5 +1,5 @@
-command = '/home/bot/VPMSdev/VPMS/venv/bin/gunicorn'
-pythonpath = '/home/bot/VPMSdev/VPMS'
+command = '/path/to/VPMS/venv/bin/gunicorn'
+pythonpath = '/path/to/VPMS'
 bind = '127.0.0.1:8001'
 workers = 5
 timeout = 120
