@@ -6,7 +6,7 @@ Created for [Virtual Office.](https://virtualoff.ru)
 
 # <p align="center"> **Instructions** </p>  
 
-## 1. Basic setup
+## 1. Initial preparations
 
 Download repo to your computer (Linux only):  
 ```bash
@@ -23,7 +23,9 @@ Install some libs:
 
 ## 2. Setup AVD
 
-[Here you can find docker hub for android-28 (AVD setup as container)](https://hub.docker.com/r/androidsdk/android-28)  
+[v4l2loopback rep](https://github.com/umlaeute/v4l2loopback/)  
+[Issue about v4l2 right start](https://github.com/umlaeute/v4l2loopback/issues/151)  
+[Docker image of android-28 (AVD setup as container)](https://hub.docker.com/r/androidsdk/android-28)  
 
 Starting virtual camera:  
 ```bash
@@ -44,10 +46,11 @@ Starting ffmpeg:
 ```
 
 <details>
-  <summary>What is > /dev/null 2>&1 < /dev/null & </summary>
+    <summary>Tip</summary>
     
+    What is "> /dev/null 2>&1 < /dev/null &" ?
     This thing uses to translate output to /dev/null.      
-    Cuz we don't wont stop our console and now output will be ignored.
+    Cuz we don't wont stop our console and now output will be ignored (Use Enter for it).
 </details>
 
 Download and run image:  
@@ -97,10 +100,39 @@ Then exit from container and repeat last step.
 If you see device in list go next.  
 Elif you don't, then launch htop and find processes `qemu-system-x86_64-headless`  
 If no processes in htop, restart container, then try to repeat steps starting from "Run emulator".  
-> Tip: Press `F4` then type `qemu-system` and press `Enter`  
-> Processes will be filtered by this text.  
 
-## 2.1 Setup WhatsApp Business
+<details>
+  <summary>Tips</summary>
+    
+   Press `F4` then type `qemu-system` and press `Enter`  
+   Processes will be filtered by this text.  
+   
+   ```bash
+       adb emu kill // Stop AVD  
+       adb exec-out screencap -p > /path/to/screen.png // Screen from AVD.  
+       scp root@xxx.xxx.xxx.xxx:/path/to/screen.png C:\path\to\save\screen.png // Download screen by ssh from main PC (Windows).  
+       adb shell input tap x y // Send tap to AVD. 
+       adb shell input text "some text" //  Send text to AVD. Uses when text input focused.  
+   ```
+</details>
+
+
+## 2.1 Setup WhatsApp Business  
+
+Download WhatsApp Business (x86) to your main PC:  
+[WhatsApp business V2.21.2.18](https://m.apkpure.com/ru/whatsapp-business/com.whatsapp.w4b/variant/2.21.2.18-APK)  
+
+Then push it (apk) to your VM uses scp:  
+```bash
+
+    scp C:\path\to\downloaded\WhatsApp Business_v2.21.2.18_apkpure.com.apk root@xxx.xxx.xxx.xxx:/path/to/save/wab.apk 
+```  
+
+Install apk to AVD:
+```bash
+
+    adb install /path/to/wab.apk  
+```
 
 ## 3. Setup ENV & Project settings
 ## 4. Setup Gunicorn & Supervisor
