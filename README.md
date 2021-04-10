@@ -4,7 +4,8 @@ Created for [Virtual Office.](https://virtualoff.ru)
 
 # <p align="center">:warning: **Demo version. Poor functionality.** :warning: </p>  
 
-# Instructions
+# <p align="center"> **Instructions** </p>  
+
 ## 1. Basic setup
 
 Download repo to your computer (Linux only):  
