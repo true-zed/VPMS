@@ -2,10 +2,7 @@
 Django based AVD management software.  
 Created for [Virtual Office.](https://virtualoff.ru)
 
-<p align="center">
-    :warning: **Demo version. Poor functionality.** :warning:  
-    :warning: **Not bad instructions** :warning:
-</p>  
+# <p align="center">:warning: **Demo version. Poor functionality.** :warning: </p>  
 
 # Instructions
 ## 1. Basic setup
