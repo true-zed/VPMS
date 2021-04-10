@@ -11,7 +11,8 @@ Created for [Virtual Office.](https://virtualoff.ru)
 Download repo to your computer (Linux only):  
 ```bash
 
-    git clone https://github.com/true-zed/VPMS.git
+    cd /path/to/your/workdir/  
+    git clone https://github.com/true-zed/VPMS.git  
 ```
 
 Install some libs:  
@@ -37,8 +38,10 @@ _______
 > 
 > (ffmpeg is tool for translate our image to /dev/video0, virtual cam)  
 > 
-> AVD need available webcam before starting for correct work camera in feature.
+> AVD need available webcam before starting for correct work camera in feature.  
 _______  
+
+<p align="center"> YOU NEED CREATE VIRTUAL CAMERA AND RUN FFMPEG BEFORE STARTING AVD </p>
 
 Starting ffmpeg:  
 ```bash
@@ -55,7 +58,9 @@ Starting ffmpeg:
 
 Download and run image:  
 ```bash
-    docker run -it --name bot --privileged androidsdk/android-28:latest bash
+    docker run -it --name bot --privileged androidsdk/android-28:latest bash // Download and run image.  
+    Ctrl + D // To quit.  
+    docker start bot // To start, cuz stoped after quited.  
 ```  
 
 <details>
@@ -70,11 +75,12 @@ Download and run image:
 
 Connect to container and download htop:  
 ```bash
+    docker exec -it bot bash // Connecting to container
     apt-get update
     apt-get install htop
 ```
 
-Create avd (in container):  
+Create AVD (in container):  
 ```bash
     avdmanager create avd -n bot --abi google_apis/x86_64 -k "system-images;android-28;google_apis;x86_64"
 ```  
@@ -97,7 +103,7 @@ Chech adb after booting (60-120 secs):
 ```
 
 Then exit from container and repeat last step.  
-If you see device in list go next.  
+If you see device in list go next step.  
 Elif you don't, then launch htop and find processes `qemu-system-x86_64-headless`  
 If no processes in htop, restart container, then try to repeat steps starting from "Run emulator".  
 
@@ -120,7 +126,7 @@ If no processes in htop, restart container, then try to repeat steps starting fr
 ## 2.1 Setup WhatsApp Business  
 
 Download WhatsApp Business (x86) to your main PC:  
-[WhatsApp business V2.21.2.18](https://m.apkpure.com/ru/whatsapp-business/com.whatsapp.w4b/variant/2.21.2.18-APK)  
+[WhatsApp Business V2.21.2.18](https://m.apkpure.com/ru/whatsapp-business/com.whatsapp.w4b/variant/2.21.2.18-APK)  
 
 Then push it (apk) to your VM uses scp:  
 ```bash
@@ -134,7 +140,52 @@ Install apk to AVD:
     adb install /path/to/wab.apk  
 ```
 
-## 3. Setup ENV & Project settings
+## 3. Setup ENV & Project settings  
+
+Creating venv:
+```bash
+
+    cd /path/to/your/workdir/VPMS/
+    python -m venv /venv/
+```
+
+Install dependences:
+```bash
+
+    pip install -r requirements/prod.txt
+```
+
+Edit config for gunicorn:
+```bash
+
+    vi gunicorn_config.py  
+    __________________________________________________________________________________________________________  
+    command = '/path/to/VPMS/venv/bin/gunicorn' // Path to gunicorn in your venv.  
+    pythonpath = '/path/to/VPMS' // Path to VPMS workdir.  
+    bind = '127.0.0.1:8001' // Bind IP to gunicorn.  
+    workers = 5 // Move to cpu_num * 2 + 1  
+    timeout = 120 // Seconds until worker stops.  
+    user = 'root' // Your username.  
+    limit_request_fields = 32000  
+    limit_request_field_size = 0  
+    // This is where you add your variable to export it to the environment.  
+    raw_env = [
+            'DJANGO_SETTINGS_MODULE=VPMS.settings.prod', // Var for choose settings file.  
+            'SECRET_KEY=SECRET', // Var for setup secret key ^^  
+            'AUTH_TOKEN=TOKEN', // Var for setup token. Used to authorize a request.  
+            'HOST=*' // Change * to your server IP.
+        ]
+```
+
+<details>
+    <summary>Tips</summary>  
+
+    Press I to edit.  
+    Press :wq to save and quit.  
+    Press :q! to quit without saving.  
+</details>
+
+
 ## 4. Setup Gunicorn & Supervisor
 ## 5. Setup autorun
 
