@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo Connecting to adb
 adb devices
 
@@ -24,11 +26,11 @@ adb shell input tap 160 120
 
 # Asking for mobile number
 echo "Enter mobile number for login, without country code. \n Example: 9996669966"
-read $tel
+read tel
 
 echo Entering mobile number
 # Input text for mobile number
-adb shell input text "$tel"
+adb shell input text $tel
 # Tap to "NEXT"
 adb shell input tap 160 390
 # Waiting for loading
@@ -39,17 +41,21 @@ adb shell input tap 260 408
 echo Waiting for code. Enter 0 if callback needed:
 # Waiting to enter code
 read code
-if [["$code" == "0"]]; then
-	echo Waiting a minute..
-	sleep 60
-	adb shell input tap 160 280
+if [ $code == "0" ]
+	then echo Waiting a minute..
+	sleep 70
+	adb shell input tap 80 322
 	echo Waiting for code. Enter:
 	read code
 fi
 
 echo Entering code
 # Input code for auth
-adb shell input text "$code"
+adb shell input text $code
+
+# Skip Network error
+sleep 5
+adb shell input tap 260 365
 
 echo Setting up..
 # Tap to "NOT NOW" to no sync
