@@ -11,7 +11,7 @@ Install some libs:
 ```bash
 
     sudo apt-get update
-    sudo apt-get install git nginx docker-io ffmpeg v4l2loopback-dkms htop
+    sudo apt-get install git nginx docker-io ffmpeg v4l2loopback-dkms supervisor htop
 ```  
 
 Configure git:
@@ -91,6 +91,7 @@ Download and run image:
 
 Connect to container and download htop:  
 ```bash
+
     docker exec -it bot bash // Connecting to container
     apt-get update
     apt-get install htop
@@ -98,12 +99,14 @@ Connect to container and download htop:
 
 Create AVD (in container):  
 ```bash
+
     avdmanager create avd -n bot --abi google_apis/x86_64 -k "system-images;android-28;google_apis;x86_64"
 ```  
 
 Run emulator (in container):  
 
 ```bash
+
     emulator @bot -no-window -no-audio -camera-back webcam0 &
 ```  
 
@@ -112,6 +115,7 @@ Run emulator (in container):
 
 Chech adb after booting (60-120 secs):
 ```bash
+
     adb devices
     __________________________
     List of devices attached
@@ -130,6 +134,7 @@ If no processes in htop, restart container, then try to repeat steps starting fr
    Processes will be filtered by this text.  
    
    ```bash
+  
        adb emu kill // Stop AVD  
        adb exec-out screencap -p > /path/to/screen.png // Screen from AVD.  
        scp root@xxx.xxx.xxx.xxx:/path/to/screen.png C:\path\to\save\screen.png // Download screen by ssh from main PC (Windows).  
@@ -202,7 +207,76 @@ Edit config for gunicorn:
 </details>
 
 
-## 4. Setup Nginx & Gunicorn & Supervisor
+## 4. Setup Nginx & Gunicorn & Supervisor  
+
+Rewriting nginx config:  
+```bash
+
+    cd /etc/nginx/sites-enabled/  
+    vi default  
+    // Clear all and insert that thing in file.  
+    
+    ___________________________________________________________________________
+    server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        root /var/www/html;
+
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name _;
+
+        location / {
+                proxy_pass http://127.0.0.1:8001;
+                proxy_set_header X-Forwarded-Host $server_name;
+                proxy_set_header X-Real-IP $remote_addr;
+                add_header P3P 'CP="ALL DSP COR PSAa OUR NOR ONL UNI COM NAV"';
+                add_header Access-Control-Allow-Origin *;
+        }
+
+    }
+```  
+
+Customize gunicorn start script:  
+```bash
+
+    cd /path/to/VPMS/  
+    vi start_gunicorn.sh  
+    
+    ______________________________________________________________  
+    #!/bin/bash  
+    source /path/to/VPMS/venv/bin/activate  
+    exec gunicorn  -c "/path/to/VPMS/gunicorn_config.py" VPMS.wsgi  // Customize your path here.  
+```  
+
+Setup supervisor config:  
+
+```bash
+
+    cd /etc/supervisor/conf.d/  
+    vi supervisor.VPMS.conf   
+    // Insert this code in vim and save.  
+    
+    ____________________
+    [program:vpms_gunicorn]  
+    command=/path/to/VPMS/start_gunicorn.sh  
+    user=your_user  
+    process_name=%(program_name)s  
+    numprocs=1  
+    autostart=true  
+    autorestart=true  
+    redirect_stderr=true  
+```  
+
+You can now restart the supervisor and the server will work:  
+
+```bash
+
+    service supervisor restart
+    service nginx restart
+```
+
 ## 5. Setup autorun
 
-> P.S. If you need help you can text [here](http://google.com) or [here](https://t.me/true_zed)
+> P.S. If you need help you can write [here](http://google.com) or [here](https://t.me/true_zed)
