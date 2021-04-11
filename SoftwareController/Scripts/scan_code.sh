@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo Connect to adb
 adb devices
 

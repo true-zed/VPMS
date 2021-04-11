@@ -13,7 +13,7 @@ BASE_DIR = settings.BASE_DIR.parent
 script_path = BASE_DIR / 'SoftwareController/Scripts/'
 qr_path = BASE_DIR / 'SoftwareController/QrCodes/'
 qr_name = 'qrcode.png'
-scancode_script_name = 'open_wab_web.sh'
+scancode_script_name = 'scan_code.sh'
 
 # Constant for background size of qr code
 background_width = 2000
