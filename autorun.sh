@@ -3,7 +3,7 @@
 echo Creating VirtualWebCam
 sudo modprobe v4l2loopback 
 sleep 2
-sudo ffmpeg -loop 1 -i /home/bot/VPMSdev/VPMS/SoftwareController/QrCodes/qrcode.png -vf scale=800:600 -f v4l2 -vcodec rawvideo -pix_fmt yuyv422 /dev/video0 > /dev/null 2>&1 < /dev/null &
+sudo ffmpeg -loop 1 -i /path/to/VPMS/SoftwareController/QrCodes/qrcode.png -vf scale=800:600 -f v4l2 -vcodec rawvideo -pix_fmt yuyv422 /dev/video0 > /dev/null 2>&1 < /dev/null &
 sleep 2
 echo Starting docker container "bot"
 sudo docker start bot
