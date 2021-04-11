@@ -1,25 +1,41 @@
 # VPMS
+![https://img.shields.io/badge/status-demo-yellow](https://img.shields.io/badge/status-demo-yellow)  
 Django based AVD management software.  
 Created for [Virtual Office.](https://virtualoff.ru)
-
-## <p align="center">:warning: **Demo version. Poor functionality.** :warning: </p>  
 
 # <p align="center"> **Instructions** </p>  
 
 ## 1. Initial preparations
 
-Download repo to your computer (Linux only):  
-```bash
-
-    cd /path/to/your/workdir/  
-    git clone https://github.com/true-zed/VPMS.git  
-```
-
 Install some libs:  
 ```bash
 
     sudo apt-get update
-    sudo apt-get install docker-io ffmpeg v4l2loopback-dkms htop
+    sudo apt-get install git nginx docker-io ffmpeg v4l2loopback-dkms htop
+```  
+
+Configure git:
+```bash
+
+    git config --global user.name "Your Name"
+    git config --global user.email yourname@example.com
+    git config --global core.autocrlf input
+```  
+
+Download repo to your computer:  
+```bash
+
+    cd /path/to/your/workdir/  
+    git clone https://github.com/true-zed/VPMS.git  
+```  
+
+Activate project bash-scripts:  
+```bash
+
+    cd /path/to/VPMS/  
+    chmod +x autorun.sh start_gunicorn.sh
+    cd SoftwareController/Scripts/
+    chmod +x login.sh logout.sh scan_code.sh
 ```
 
 ## 2. Setup AVD
@@ -186,7 +202,7 @@ Edit config for gunicorn:
 </details>
 
 
-## 4. Setup Gunicorn & Supervisor
+## 4. Setup Nginx & Gunicorn & Supervisor
 ## 5. Setup autorun
 
 > P.S. If you need help you can text [here](http://google.com) or [here](https://t.me/true_zed)
