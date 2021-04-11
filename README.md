@@ -1,7 +1,8 @@
 # VPMS
-![https://img.shields.io/badge/status-demo-red](https://img.shields.io/badge/status-demo-red)
-![https://img.shields.io/badge/python-3.8.5-green](https://img.shields.io/badge/python-3.8.5-green)
-![https://img.shields.io/badge/WhatsApp-2.21.2.18-green](https://img.shields.io/badge/WhatsApp-2.21.2.18-green)  
+![https://img.shields.io/badge/Status-Demo-red](https://img.shields.io/badge/Status-Demo-red)
+![https://img.shields.io/badge/Python-3.8.5-green](https://img.shields.io/badge/Python-3.8.5-green)
+![https://img.shields.io/badge/Django-3.1.7-green](https://img.shields.io/badge/Django-3.1.7-green)
+![https://img.shields.io/badge/WA_Business-2.21.2.18-green](https://img.shields.io/badge/WA_Business-2.21.2.18-green)  
 Django based AVD management software.  
 Created for [Virtual Office.](https://virtualoff.ru)
 > P.S. If you need help you can write [here](http://google.com) or [here](https://t.me/true_zed)  
