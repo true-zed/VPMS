@@ -6,6 +6,9 @@ adb devices
 echo "Opening the WhatsApp Business .."
 adb shell am start -n com.whatsapp.w4b/com.whatsapp.Main
 
+echo "Waiting for WhatsApp Business to load .."
+sleep 3
+
 echo "Removing ROM warning .."
 adb shell input tap 160 410
 
