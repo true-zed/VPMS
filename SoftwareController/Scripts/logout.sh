@@ -1,4 +1,4 @@
 #!/bin/bash
 
-echo Clearing data..
+echo "Exiting .."
 adb shell pm clear com.whatsapp.w4b
