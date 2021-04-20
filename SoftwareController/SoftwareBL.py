@@ -89,6 +89,8 @@ def scan_code(qr_code: str) -> bool:
     :return:
     """
 
+    Popen('killall ffmpeg', shell=True)
+    
     new_qr = _save_qr_code(qr_code)
     _set_image(new_qr)
     _scan_code()
@@ -96,7 +98,5 @@ def scan_code(qr_code: str) -> bool:
     # TODO: Maybe need to fix it. Cause it could be stopping thread. Idk. (2)
     #       Celery could fix that problem
     sleep(45)
-
-    Popen('killall ffmpeg', shell=True)
 
     return True

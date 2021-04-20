@@ -1,0 +1,37 @@
+version: '3.6'
+
+services:
+    web:
+        privileged: true
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+            - /dev/:/dev/
+        environment:
+            - HOST=web
+            - SECRET_KEY=foo
+            - TOKEN=tkn
+            - DJANGO_SETTINGS_MODULE=VPMS.settings.prod
+        restart: always
+    nginx:
+        build:
+            context: ./docker/nginx
+            dockerfile: Dockerfile
+        depends_on:
+            - web
+        ports:
+            - "80:80"    
+        restart: always
+    emu:
+        privileged: true
+        network_mode: "service:web"
+        build:
+            context: ./docker/emu
+            dockerfile: Dockerfile
+        depends_on:
+            - web
+        volumes:
+            - /dev/:/dev/
+        restart: always
