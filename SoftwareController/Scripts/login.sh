@@ -10,7 +10,7 @@ echo "Waiting for WhatsApp Business to load .."
 sleep 10
 
 echo "Removing ROM warning .."
-adb shell input tap 160 410
+adb shell input tap 163 407
 
 sleep 2
 

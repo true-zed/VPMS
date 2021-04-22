@@ -20,10 +20,8 @@ RUN apt-get install -y python3 python3-pip
 COPY . .
 RUN pip3 install -r ./requirements/prod.txt
 
-# RUN apt-get install -y linux-headers-$(uname -r)
-
 # install ffmpeg
-RUN apt-get install -y ffmpeg adb modules-extra-$(uname -r) dkms v4l2loopback-dkms 
+RUN apt-get install -y ffmpeg adb modules-extra-$(uname -r) dkms v4l2loopback-dkms psmisc 
 
 # give permissions
 RUN chmod -x docker-entrypoint.sh
