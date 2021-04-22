@@ -12,8 +12,8 @@ services:
         environment:
             - HOST=web
             - SECRET_KEY=foo
-            - TOKEN=tkn
-            - DJANGO_SETTINGS_MODULE=VPMS.settings.prod
+            - AUTH_TOKEN=tkn
+            - DJANGO_SETTINGS_MODULE=VPMS.settings.dev
         restart: always
     nginx:
         build:
