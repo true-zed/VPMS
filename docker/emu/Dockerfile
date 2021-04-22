@@ -9,6 +9,6 @@ RUN echo "no" | avdmanager create avd -n bot --abi google_apis/x86_64 -k "system
 
 COPY . .
 
-RUN chmod +x /opt/android-sdk-linux/docker-entrypoint.sh
+RUN chmod +x docker-entrypoint.sh
 
-CMD /opt/android-sdk-linux/docker-entrypoint.sh
+ENTRYPOINT ["bash", "docker-entrypoint.sh"]

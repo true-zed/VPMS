@@ -12,7 +12,7 @@ echo "Starting Activity .."
 adb shell "su 0 am start com.whatsapp.w4b/com.whatsapp.qrcode.DevicePairQrScannerActivity"
 
 # If instructions
-adb sell input tap 160 535
+adb shell input tap 160 535
 
 echo "Waiting for a code scan .."
 sleep 10

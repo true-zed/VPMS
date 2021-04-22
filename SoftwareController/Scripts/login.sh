@@ -65,7 +65,7 @@ if [ $code == "0" ]
 	then echo "Waiting for 70 seconds .."
 	sleep 70
 	echo "Tapping the \"Call me\" button .."
-	adb shell input tap 80 280
+	adb shell input tap 80 322
 	echo -e "Waiting for the code .. \nEnter:"
 	read code
 fi
