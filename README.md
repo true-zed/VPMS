@@ -23,5 +23,7 @@ cd VPMS
 docker-compose up --build
 
 Waiting 10-20 mins
-For login use script in web:/usr/src/app/SoftwareController/Scripts/login.sh
+
+For login use script web:/usr/src/app/SoftwareController/Scripts/login.sh
+For logot use script web:/usr/src/app/SoftwareController/Scripts/logout.sh
 ```
